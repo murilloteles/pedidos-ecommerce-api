@@ -1,2 +1,2 @@
 # pedidos-ecommerce-api
-api rest de controle de pedidos
+Api rest para controlar pedidos de um ecommerce.
