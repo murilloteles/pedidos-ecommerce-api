@@ -4,13 +4,18 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.telesdev.pedidosecommerce.domain.ItemPedido;
 import com.telesdev.pedidosecommerce.exceptions.ItemPedidoNaoEncontradoException;
+import com.telesdev.pedidosecommerce.repository.ItensRepository;
 
 @Service
 public class ItensService {
+	
+	@Autowired
+	private ItensRepository itensRepository;
 
 	public List<ItemPedido> listar() {
 		return listarTodosItens();
@@ -26,6 +31,10 @@ public class ItensService {
 			throw new ItemPedidoNaoEncontradoException("O Item:" + nome + " não foi encontrado");
 		
 		return itemPedido;	
+	}
+	
+	public BigDecimal calcularValorTotalItensPedido(Long idPedido) {
+		return itensRepository.calcularValorTotalItensPedido(idPedido);
 	}
 	
 	private  List<ItemPedido> listarTodosItens() {

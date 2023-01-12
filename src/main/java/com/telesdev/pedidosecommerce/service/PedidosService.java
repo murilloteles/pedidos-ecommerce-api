@@ -1,6 +1,5 @@
 package com.telesdev.pedidosecommerce.service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,10 +40,9 @@ public class PedidosService {
 
 		});
 		pedido.getItens().clear();
-		pedido.getItens().addAll(listaItemPedidos);
-		pedido.setTotal(calcularTotalPedido(pedido));
-		
-		return pedidosRepository.save(pedido);
+		pedido.getItens().addAll(listaItemPedidos); 
+		Pedido pedidoSalvo = pedidosRepository.save(pedido);
+		return atualizarTotalPedido(pedidoSalvo);
 	}
 
 	private boolean isItemExistente(List<ItemPedido> listaItemPedidos, ItemPedido item) {
@@ -81,10 +79,11 @@ public class PedidosService {
 		return buscar(id);
 	}
 	
-	private BigDecimal calcularTotalPedido(Pedido pedido) {
-		pedido.setTotal(BigDecimal.ZERO);
-		pedido.getItens().forEach(item -> pedido.setTotal( pedido.getTotal().add(item.getPreco().multiply(new BigDecimal(item.getQuantidade())))));
-		return pedido.getTotal();
+	private Pedido atualizarTotalPedido(Pedido pedido) {
+		//pedido.getItens().forEach(item -> pedido.setTotal( pedido.getTotal().add(item.getPreco().multiply(new BigDecimal(item.getQuantidade())))));
+		//Só para exemplo, chamando a function pgsql
+		pedido.setTotal(itensService.calcularValorTotalItensPedido(pedido.getId()));
+		return pedidosRepository.save(pedido);
 	}
 
 }
