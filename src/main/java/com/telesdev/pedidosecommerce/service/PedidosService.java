@@ -30,12 +30,14 @@ public class PedidosService {
 		List<ItemPedido> listaItemPedidos = new ArrayList<>();
 		
 		pedido.getItens().forEach(item -> {
-			ItemPedido itemResultado = itensService.buscar(item.getNome());
-			
 			if(!isItemExistente(listaItemPedidos, item)) {
-				itemResultado.setQuantidade(item.getQuantidade());
-				itemResultado.setPedido(pedido);
-				listaItemPedidos.add(itemResultado);
+				ItemPedido itemBusca = itensService.buscar(item.getNome());
+				ItemPedido itemSalvar = new ItemPedido();
+				itemSalvar.setNome(itemBusca.getNome());
+				itemSalvar.setPreco(itemBusca.getPreco());
+				itemSalvar.setQuantidade(item.getQuantidade());
+				itemSalvar.setPedido(pedido);
+				listaItemPedidos.add(itemSalvar);
 			}
 
 		});
