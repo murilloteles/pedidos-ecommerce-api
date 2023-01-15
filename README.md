@@ -10,6 +10,8 @@
 - `Atualizar`: Atualiza um pedido específico já salvo.
 - `Deletar`: Exclui um pedido específico já salvo.
 
+-  A Documentação das Funcionalidades pode ser acessada pelo link: `http://localhost:8082/swagger-ui`.
+
 # Tecnologias utilizadas
 
 - `Java 8`
