@@ -27,12 +27,9 @@ public class ItensService {
 	
 	String itens;
 
-	public List<ItemPedido> listar() {
-		return listarTodosItens();
-	}
-
 	public ItemPedido buscar(String nome) {
-		ItemPedido itemPedido = listarTodosItens().stream()
+		List<ItemPedido> todosItens = listarTodosItens();
+		ItemPedido itemPedido = todosItens.stream()
 				.filter(item -> item.getNome().toUpperCase().equals(nome.toUpperCase()))
 				.findAny()
 				.orElse(null);
