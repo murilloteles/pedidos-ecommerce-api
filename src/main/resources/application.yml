@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: password
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQL81Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+  kafka:
+     consumer:
+        bootstrap-servers: 127.0.0.1:9092
+        group-id: group_id
+        auto-offset-reset: earliest
+        key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+        value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: "metrics, health, pedidos"
+      base-path: /gerenciador
+      path-mapping:
+        health: "saude"
+  endpoint:
+    metrics:
+      enabled: true
+    health:
+      enabled: true
+      show-details: always
+  health:
+    diskspace:
+      enabled: false
+  metrics:
+    enable:
+      hikaricp: false
+  server:
+    port: 8081
+server:
+  port: 8082

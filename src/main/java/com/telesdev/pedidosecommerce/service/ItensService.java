@@ -6,9 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.telesdev.pedidosecommerce.consumer.ConsumerKafka;
@@ -57,6 +59,22 @@ public class ItensService {
 
 		return Arrays.asList(response.getBody());
 			
+	}
+	
+	public boolean msEstaOnline() {
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+	
+			RequestEntity<Void> request = RequestEntity.get(URI.create("http://localhost:8080/itens")).build();
+			
+			ResponseEntity<ItemPedido[]> response = restTemplate.exchange(request, ItemPedido[].class);
+			
+			return response.getStatusCode() != HttpStatus.INTERNAL_SERVER_ERROR;
+		}catch (RestClientException rc) {
+			System.out.println("Comunicação falhou com o itens pedidos ms. " + rc.getMessage());
+			return false;
+		}
+		
 	}
 
 }

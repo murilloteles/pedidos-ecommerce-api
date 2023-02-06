@@ -21,6 +21,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.telesdev.pedidosecommerce.domain.Pedido;
 import com.telesdev.pedidosecommerce.service.PedidosService;
 
+import io.micrometer.core.annotation.Counted;
+
 @RestController
 @RequestMapping("/pedidos")
 public class PedidosResource {
@@ -29,6 +31,7 @@ public class PedidosResource {
 	PedidosService pedidosService;
 	
 	@GetMapping
+	@Counted(value= "pedido.count.listar")
 	public ResponseEntity<List<Pedido>> listar() {
 		return ResponseEntity.status(HttpStatus.OK).body(pedidosService.listar());
 	}
